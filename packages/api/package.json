@@ -1,0 +1,16 @@
+{
+  "name": "uberbar-api",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "backpack src/",
+    "build": "backpack build"
+  },
+  "dependencies": {
+    "backpack-core": "^0.8.3",
+    "express": "^4.16.4",
+    "systeminformation": "^4.1.5",
+    "ws": "^6.2.1"
+  }
+}
