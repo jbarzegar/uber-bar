@@ -3,6 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "build": "cd packages/api && $npm_execpath run build && cd ../../ && $npm_execpath run deploy",
+    "deploy": "node scripts/move.js"
+  },
   "private": true,
-  "workspaces": ["packages/*"]
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "fs-extra": "^7.0.1"
+  }
 }
