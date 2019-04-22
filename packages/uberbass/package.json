@@ -1,0 +1,8 @@
+{
+  "name": "uberbass",
+  "version": "1.0.0",
+  "description": "Rebass for Übersicht widgets",
+  "main": "index.js",
+  "author": "James Barzegar",
+  "license": "MIT"
+}
