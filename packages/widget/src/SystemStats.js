@@ -1,4 +1,4 @@
-import { Icon, Flex, Text } from "../lib/uberbass";
+import { Icon, Flex, Text } from "uberbass";
 import { colors } from "./theme";
 
 let StatusItem = ({ color, iconName, status }) => (
@@ -68,7 +68,7 @@ let Clock = props => (
   <StatusItem color={colors.red} iconName="access_time" {...props} />
 );
 
-export default ({ time, date, cpu, battery }) => {
+let SystemStats = ({ time, date, cpu, battery }) => {
   return (
     <Flex alignItems="center">
       <Battery {...battery} />
@@ -78,3 +78,5 @@ export default ({ time, date, cpu, battery }) => {
     </Flex>
   );
 };
+
+export default SystemStats;

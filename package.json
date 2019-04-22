@@ -8,9 +8,6 @@
     "deploy": "node scripts/move.js"
   },
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
   "dependencies": {
     "fs-extra": "^7.0.1"
   }

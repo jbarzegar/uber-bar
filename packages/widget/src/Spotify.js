@@ -1,11 +1,11 @@
-import { Text, Flex } from "../lib/uberbass";
+import { Text, Flex } from "uberbass";
 import { colors } from "./theme";
 
 let SongText = props => (
   <Text mx={4} css={{ fontStyle: "italic" }} {...props} />
 );
 
-export default ({ music }) => (
+let Spotify = ({ music }) => (
   <Flex
     css={{
       position: "absolute",
@@ -25,3 +25,5 @@ export default ({ music }) => (
     <SongText color={colors.yellow}>Paused</SongText> */}
   </Flex>
 );
+
+export default Spotify;

@@ -15,8 +15,6 @@ let apiSourceDir = path.join(__dirname, "../packages/api/build");
 async function main() {
   await Promise.all([widgetFolder, binFolder].map(x => fs.ensureDir(x)));
 
-  console.log(widgetSourceDir, widgetFolder);
-  fs.move(widgetSourceDir, path.join(widgetFolder, "uber-bar"));
-  fs.move(apiSourceDir, binFolder);
+  fs.copy(widgetSourceDir, path.join(widgetFolder, "uber-bar"));
 }
 main();

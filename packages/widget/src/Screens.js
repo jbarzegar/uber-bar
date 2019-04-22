@@ -1,4 +1,4 @@
-import { Flex, Text, Icon } from "../lib/uberbass";
+import { Flex, Text, Icon } from "uberbass";
 import { colors } from "./theme";
 
 let ScreenItem = ({ active = false, ...props }) => {
@@ -21,7 +21,7 @@ let ScreenItem = ({ active = false, ...props }) => {
   );
 };
 
-export default ({ tilingMode = "", activeScreen = "", screenCount = [] }) => (
+let Screens = ({ tilingMode = "", activeScreen = "", screenCount = [] }) => (
   <Flex mr={"auto"} flex={1} alignItems="center">
     <Icon color={colors.pink} mr={10} pt={1}>
       tv
@@ -38,3 +38,5 @@ export default ({ tilingMode = "", activeScreen = "", screenCount = [] }) => (
     </Text>
   </Flex>
 );
+
+export default Screens;

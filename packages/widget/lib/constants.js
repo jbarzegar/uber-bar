@@ -20,3 +20,5 @@ export const TIMEOUTS = {
   tilingMode: 1000
   // music: 4000
 };
+
+export const SOCKET_URL = "ws://localhost:2233";
