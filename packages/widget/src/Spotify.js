@@ -1,4 +1,4 @@
-import { Text, Flex } from "uberbass";
+import { Text, Flex } from "../lib/uberbass";
 import { colors } from "./theme";
 
 let SongText = props => (

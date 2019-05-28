@@ -1,4 +1,4 @@
-import { Icon, Flex, Text } from "uberbass";
+import { Icon, Flex, Text } from "../lib/uberbass";
 import { colors } from "./theme";
 
 let StatusItem = ({ color, iconName, status }) => (

@@ -9,7 +9,7 @@ import {
   SOCKET_URL
 } from "./lib/constants";
 import { actions, reduceState, initialState } from "./lib/state";
-import { constructObjectWithDefaultValue } from "uberbass/helpers";
+import { constructObjectWithDefaultValue } from "./lib/uberbass/helpers";
 
 import Screens from "./src/Screens";
 // import Spotify from "./src/Spotify";
@@ -179,11 +179,10 @@ export const render = ({
 
 export const className = {
   ...constructObjectWithDefaultValue(["left", "right"], 0),
-  top: 8,
+  bottom: 0,
   background: "rgba(42, 52, 61, 0.7);",
   height: "40px",
-  borderRadius: 60,
-  width: "98%",
+  width: "100%",
   margin: "auto",
-  position: "relative"
+  position: "absolute"
 };

@@ -9,6 +9,8 @@
   },
   "private": true,
   "dependencies": {
-    "fs-extra": "^7.0.1"
+    "fkill": "^6.1.0",
+    "fs-extra": "^7.0.1",
+    "rimraf": "^2.6.3"
   }
 }

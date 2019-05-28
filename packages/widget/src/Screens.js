@@ -1,4 +1,4 @@
-import { Flex, Text, Icon } from "uberbass";
+import { Flex, Text, Icon } from "../lib/uberbass";
 import { colors } from "./theme";
 
 let ScreenItem = ({ active = false, ...props }) => {
