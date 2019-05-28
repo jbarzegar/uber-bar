@@ -55,3 +55,5 @@ wsServer.on("connection", function connection(ws) {
     } catch (e) {} // Throw away invalid messages
   });
 });
+
+exec("osascript -e 'tell application \"Übersicht\" to refresh'")
