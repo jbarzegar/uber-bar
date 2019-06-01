@@ -3,14 +3,21 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "build": "cd packages/api && $npm_execpath run build && cd ../../ && $npm_execpath run deploy",
-    "deploy": "node scripts/move.js"
+    "move": "node scripts/move.js"
   },
   "private": true,
   "dependencies": {
     "fkill": "^6.1.0",
     "fs-extra": "^7.0.1",
     "rimraf": "^2.6.3"
+  },
+  "devDependencies": {
+    "consola": "^2.7.1",
+    "yargs": "^13.2.4"
   }
 }

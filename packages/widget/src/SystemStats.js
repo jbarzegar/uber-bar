@@ -24,7 +24,7 @@ let Battery = ({ ischarging = false, percent: _percent }) => {
         color: colors.red,
         iconName: !ischarging ? "battery_alert" : "battery_charging_full"
       };
-    } else if (percent < 50) {
+    } else if (percent <= 50) {
       return {
         color: colors.yellow
       };
@@ -45,9 +45,9 @@ let CPU = ({ currentload }) => {
   let renderColor = () => {
     if (currentLoad < 50) {
       return colors.blue;
-    } else if (currentLoad >= 50) {
+    } else if (currentLoad <= 50) {
       return colors.yellow;
-    } else if (currentLoad >= 70) {
+    } else if (currentLoad <= 70) {
       return colors.red;
     }
   };

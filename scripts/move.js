@@ -1,24 +1,22 @@
+let logger = require("consola");
 let fs = require("fs-extra");
-let { exec } = require("child_process");
-let path = require("path");
+let { promisify } = require("util");
+let exec = promisify(require("child_process").exec);
+let { spawn } = require("child_process");
 let fkill = require("fkill");
 
+let { argv } = require("yargs")
+  .command("no-install", "run move without installing deps")
+  .alias("n", "no-install");
+
+let { paths, shouldUseYarn } = require("./utils");
+
 const ubersicht = "Übersicht";
-const HOME = require("os").homedir();
-
-let widgetFolder = path.join(
-  HOME,
-  "/Library/Application Support/Übersicht/widgets"
-);
-let binFolder = path.join(HOME, ".bin/uber-bar-api");
-
-let widgetSourceDir = path.join(__dirname, "../packages/widget");
-let uberbassSourceDir = path.join(__dirname, "../packages/uberbass");
 
 let clean = () =>
   new Promise((resolve, reject) => {
-    if (fs.existsSync(path.join(widgetFolder, "uber-bar"))) {
-      fs.emptyDir(path.join(widgetFolder, "uber-bar"))
+    if (fs.existsSync(paths.uberBarPath)) {
+      fs.emptyDir(paths.uberBarPath)
         .then(resolve)
         .catch(reject);
     } else {
@@ -26,30 +24,76 @@ let clean = () =>
     }
   });
 
-(async () => {
-  await Promise.all([widgetFolder, binFolder].map(x => fs.ensureDir(x)));
-
-  try {
-    await clean();
-
-    await fs.copy(widgetSourceDir, path.join(widgetFolder, "uber-bar"));
-    await fs.copy(
-      uberbassSourceDir,
-      path.join(widgetFolder, "uber-bar", "lib", "uberbass")
-    );
-
-    console.log("gracefully restarting", ubersicht, "...");
+let restartUbersicht = () =>
+  new Promise(async (resolve, reject) => {
+    logger.info(`Gracefully restarting ${ubersicht}...`);
     await fkill(ubersicht);
     setTimeout(
       () =>
-        exec(`open -a ${ubersicht}`, err => {
-          if (err) throw err;
-
-          console.log("done");
-        }),
+        exec(`open -a ${ubersicht}`)
+          .then(() => {
+            logger.success(`Restarted ${ubersicht}`);
+            resolve();
+          })
+          .catch(reject),
       3000
     );
+  });
+
+let cd = p => {
+  let before = process.cwd();
+  process.chdir(p);
+  return () => process.chdir(before);
+};
+
+let installUberbassDeps = async () => {
+  let binary = shouldUseYarn() ? "yarnpkg" : "npm";
+  let goBack = cd(paths.uberBarPath);
+  try {
+    logger.info("Installing widget dependencies");
+    return await new Promise((resolve, reject) => {
+      let installer = spawn(binary, ["install"], {
+        shell: true,
+        stdio: "inherit"
+      });
+
+      installer.on("error", reject);
+
+      installer.on("close", signal => {
+        goBack();
+        logger.success(`${binary} install completed`);
+        resolve();
+      });
+    });
+  } catch (e) {
+    throw e;
+  }
+};
+
+(async () => {
+  try {
+    await Promise.all(
+      [paths.widgetFolder, paths.binFolder].map(x => fs.ensureDir(x))
+    );
+
+    await clean();
+
+    await fs.copy(paths.widgetSourceDir, paths.uberBarPath);
+    await fs.copy(paths.uberbassSourceDir, paths.uberBass);
+
+    if (argv["no-install"] !== true) {
+      await installUberbassDeps();
+    }
+
+    await restartUbersicht();
+    logger.success("Widget install successful");
+
+    if (!process.env.npm_execpath.includes("yarn.js")) {
+      process.stdout.write(Buffer.from(`✨  Done`));
+    }
   } catch (e) {
     throw new Error(e);
   }
-})();
+})().catch(err => {
+  throw new Error(err);
+});
